@@ -1,5 +1,9 @@
+mod message;
+
 use flowsnet_platform_sdk::logger;
 use tg_flows::{listen_to_update, Telegram, Update, UpdateKind};
+
+use message::START_MSG;
 
 #[no_mangle]
 #[tokio::main(flavor = "current_thread")]
@@ -19,5 +23,14 @@ async fn handler(tele: Telegram, update: Update) {
         let chat_id = msg.chat.id;
 
         let _sended_msg = tele.send_message(chat_id, text);
+
+        match text.to_ascii_lowercase().as_str() {
+            "/start" => {
+                _ = tele.send_message(chat_id, START_MSG.to_string());
+            }
+            _ => {
+                _ = tele.send_message(chat_id, text);
+            }
+        };
     }
 }
