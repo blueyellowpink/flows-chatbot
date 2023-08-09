@@ -22,8 +22,6 @@ async fn handler(tele: Telegram, update: Update) {
         let text = msg.text().unwrap_or("");
         let chat_id = msg.chat.id;
 
-        let _sended_msg = tele.send_message(chat_id, text);
-
         match text.to_ascii_lowercase().as_str() {
             "/start" => {
                 _ = tele.send_message(chat_id, START_MSG.to_string());
